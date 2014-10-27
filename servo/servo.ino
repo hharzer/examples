@@ -36,6 +36,7 @@ void cnt(uid8 c, char* cc) {
 	appb.send_components();
 
 	appb.add_callback(text, inc);
+	appb.set_text(label, "Servo-Beispiel");
 }
  
 void setup() 
