@@ -29,7 +29,7 @@
 
 #include "AppBuilder.h"
 
-AppBuilder appb(4, 1, String("AVH\0"), 2048);
+AppBuilder appb(10, 1, String("AVH\0"), 2048);
 uid8 label_poti = 0, text = 0;
 int count = 0;
 
@@ -45,12 +45,22 @@ void serialEvent()
 void onconnect(uid8 egal, char *ebenso)
 {
     uid8 root = appb.start_layout();
+
+    uid8 sec = appb.start_layout();
+    uid8 labl = appb.add_label();
     text = appb.add_label();
+    appb.end_layout(sec);
+
+    uid8 tri = appb.start_layout();
+    uid8 labl2 = appb.add_label();
     label_poti = appb.add_label();
+    appb.end_layout(tri);
+    
     appb.end_layout(root);
 
     appb.send_components();
-    appb.set_text(text, "Zaehler:\0");
+    appb.set_text(labl, "Zaehler:");
+    appb.set_text(labl2, "Poti:");
 }
 
 void setup()
