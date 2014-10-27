@@ -29,12 +29,16 @@
 
  #include "AppBuilder.h"
 
-AppBuilder appb(2,0,"AVH\0",2048);
+AppBuilder appb(4,1,String("AVH\0"),2048);
 uid8 label = 0;
 
 int sensorPin = A0;    // select the input pin for the potentiometer
 // select the pin for the LED
 int sensorValue = 0;  // variable to store the value coming from the sensor
+
+void serialEvent() {
+  appb.serial_event();
+}
 
 void onconnect(uid8 egal, char* ebenso) {
 	uid8 root = appb.start_layout();
@@ -42,6 +46,7 @@ void onconnect(uid8 egal, char* ebenso) {
 	label = appb.add_label();
 	appb.end_layout(root);
 
+  appb.send_components();
 	appb.set_text(text, "Zaehler:\0");
 }
 
@@ -49,10 +54,13 @@ void setup() {
   // declare the ledPin as an OUTPUT:
   Serial.begin(9600);
 
+  appb.set_onconnect(onconnect);
+
 }
 
 void loop() {
   // read the value from the sensor:
+  appb.refresh();
   sensorValue = analogRead(sensorPin);    
 	char mydelaystr[32];
         String(sensorValue).toCharArray(mydelaystr, 32);
